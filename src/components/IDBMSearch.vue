@@ -11,7 +11,6 @@
       type="text"
       v-model="text"
       placeholder="Search for a film"
-      @input="searchFilms()"
     />
     <a href="#" class="search-btn">
       <i class="fas fa-search"></i>
@@ -27,8 +26,8 @@
             class="checkbox"
             type="checkbox"
             id="drama"
-            value="drama"
-            checked
+            value="Drama"
+            v-model="checkedGenres"
           />
           <label for="drama"> Drama </label>
         </div>
@@ -37,8 +36,8 @@
             class="checkbox"
             type="checkbox"
             id="action"
-            value="action"
-            checked
+            value="Action"
+            v-model="checkedGenres"
           />
           <label for="action"> Action </label>
         </div>
@@ -47,8 +46,8 @@
             class="checkbox"
             type="checkbox"
             id="crime"
-            value="crime"
-            checked
+            value="Crime"
+            v-model="checkedGenres"
           />
           <label for="crime"> Crime </label>
         </div>
@@ -57,8 +56,8 @@
             class="checkbox"
             type="checkbox"
             id="horror"
-            value="horror"
-            checked
+            value="Horror"
+            v-model="checkedGenres"
           />
           <label for="horror"> Horror </label>
         </div>
@@ -71,7 +70,7 @@
             type="checkbox"
             id="tvMovie"
             value="tvMovie"
-            checked
+            v-model="checkedTypes"
           />
           <label for="tvMovie"> TV Movie </label>
         </div>
@@ -81,7 +80,7 @@
             type="checkbox"
             id="video"
             value="video"
-            checked
+            v-model="checkedTypes"
           />
           <label for="video"> Video </label>
         </div>
@@ -91,7 +90,7 @@
             type="checkbox"
             id="short"
             value="short"
-            checked
+            v-model="checkedTypes"
           />
           <label for="video"> Short film </label>
         </div>
@@ -101,7 +100,7 @@
             type="checkbox"
             id="videogame"
             value="videogame"
-            checked
+            v-model="checkedTypes"
           />
           <label for="videogame"> Videogame </label>
         </div>
@@ -118,13 +117,28 @@ export default defineComponent({
   data() {
     return {
       text: "",
+      checkedGenres: ["Drama", "Crime", "Horror", "Action"],
+      checkedTypes: ["tvMovie", "short", "videogame", "video"],
     };
   },
   methods: {
-    searchFilms() {
-      createStore.dispatch("searchFilms", {
-        name: this.text,
+    searchFilms(name, genres, types) {
+      createStore.dispatch("filterFilms", {
+        name: name,
+        genres: genres,
+        types: types,
       });
+    },
+  },
+  watch: {
+    text(newText) {
+      this.searchFilms(newText, this.checkedGenres, this.checkedTypes);
+    },
+    checkedGenres(newChecked) {
+      this.searchFilms(this.text, newChecked, this.checkedTypes);
+    },
+    checkedTypes(newChecked) {
+      this.searchFilms(this.text, this.checkedGenres, newChecked);
     },
   },
 });
@@ -203,7 +217,9 @@ export default defineComponent({
   font-size: 22px;
 }
 
-.checkbox:checked {
-  background-color: #42b983;
+.checkbox {
+  size: 30px;
+  border: solid white 2px;
+  accent-color: #132425;
 }
 </style>

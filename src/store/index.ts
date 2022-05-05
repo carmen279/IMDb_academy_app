@@ -4,6 +4,9 @@ export default createStore({
   state: {
     films: { next: "", previous: "", results: [] as any[] },
     currentPage: 1,
+    nameFilter: "",
+    genresFilter: [],
+    typeFilter: [],
   },
   getters: {
     currentPage(state) {
@@ -23,6 +26,11 @@ export default createStore({
     setPage(state, newPage) {
       state.currentPage = newPage;
     },
+    setParams(state, params) {
+      state.nameFilter = params.name;
+      state.genresFilter = params.genres;
+      state.typeFilter = params.types;
+    },
   },
   actions: {
     async getFilmsFromAPI(context) {
@@ -32,18 +40,29 @@ export default createStore({
       console.log(data);
       context.commit("set", data);
     },
-
-    async searchFilms(context, params) {
-      const filmname = params.name;
-      if (filmname !== "") {
-        const Url = `http://localhost:8080/api/search?q=${filmname}`;
-        console.log(Url);
-        const data = await fetch(Url).then((response) => response.json());
-        console.log(data);
-        context.commit("set", data);
-      } else {
-        context.dispatch("getFilmsFromAPI");
+    filterFilms(context, params) {
+      context.commit("setParams", params);
+      context.dispatch("searchFilms");
+    },
+    async searchFilms(context) {
+      let Url = "http://localhost:8080/api/search?genre=";
+      for (const genre of context.state.genresFilter) {
+        Url = Url + `${genre},`;
       }
+      Url = Url.slice(0, Url.length - 1);
+      Url = Url + "&type=";
+      for (const type of context.state.typeFilter) {
+        Url = Url + `${type},`;
+      }
+      Url = Url.slice(0, Url.length - 1);
+      if (context.state.nameFilter !== "") {
+        Url = Url + `&q=${context.state.nameFilter}`;
+      }
+
+      console.log(Url);
+      const data = await fetch(Url).then((response) => response.json());
+      console.log(data);
+      context.commit("set", data);
     },
     changePreviousPage(context) {
       return fetch(context.state.films.previous)
