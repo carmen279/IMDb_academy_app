@@ -4,6 +4,7 @@ export default createStore({
   state: {
     films: { next: "", previous: "", results: [] as any[] },
     currentPage: 1,
+    pageSize: 12,
     nameFilter: "",
     genresFilter: [] as { name: string; value: string }[],
     typeFilter: [] as { name: string; value: string }[],
@@ -78,6 +79,11 @@ export default createStore({
         Url = Url + `&q=${context.state.nameFilter}`;
       }
 
+      Url =
+        Url +
+        `&from=${context.state.currentPage * context.state.pageSize}&size=${
+          context.state.pageSize
+        }`;
       console.log(Url);
       const data = await fetch(Url).then((response) => response.json());
       console.log(data);
@@ -88,7 +94,7 @@ export default createStore({
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          context.commit("setPokemons", data);
+          context.commit("set", data);
         })
         .then((data) =>
           context.commit("setPage", context.state.currentPage - 1)
@@ -98,7 +104,7 @@ export default createStore({
     changeNextPage(context) {
       return fetch(context.state.films.next)
         .then((response) => response.json())
-        .then((data) => context.commit("setPokemons", data))
+        .then((data) => context.commit("set", data))
         .then((data) =>
           context.commit("setPage", context.state.currentPage + 1)
         )

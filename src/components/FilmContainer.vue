@@ -30,7 +30,7 @@ export default defineComponent({
     },
   },
   methods: {
-    ...mapActions(["callAllPokemons", "changeNextPage", "changePreviousPage"]),
+    ...mapActions(["searchFilms", "changeNextPage", "changePreviousPage"]),
   },
 });
 </script>
