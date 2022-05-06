@@ -32,9 +32,6 @@ export default defineComponent({
   methods: {
     ...mapActions(["callAllPokemons", "changeNextPage", "changePreviousPage"]),
   },
-  beforeMount() {
-    createStore.dispatch("getFilmsFromAPI");
-  },
 });
 </script>
 

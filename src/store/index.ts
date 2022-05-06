@@ -5,8 +5,8 @@ export default createStore({
     films: { next: "", previous: "", results: [] as any[] },
     currentPage: 1,
     nameFilter: "",
-    genresFilter: [],
-    typeFilter: [],
+    genresFilter: [] as { name: string; value: string }[],
+    typeFilter: [] as { name: string; value: string }[],
   },
   getters: {
     currentPage(state) {
@@ -17,6 +17,22 @@ export default createStore({
     },
     previousPage(state) {
       return state.films.previous;
+    },
+    getInitialGenres(state) {
+      return [
+        { name: "Drama", value: "Drama" },
+        { name: "Crime", value: "Crime" },
+        { name: "Horror", value: "Horror" },
+        { name: "Action", value: "Action" },
+      ];
+    },
+    getInitialTypes(state) {
+      return [
+        { name: "TV Movie", value: "tvMovie" },
+        { name: "Short", value: "short" },
+        { name: "Videogame", value: "videogame" },
+        { name: "Video", value: "video" },
+      ];
     },
   },
   mutations: {
@@ -31,14 +47,17 @@ export default createStore({
       state.genresFilter = params.genres;
       state.typeFilter = params.types;
     },
+    initializeFilters(state, params) {
+      state.genresFilter = params.genres;
+      state.typeFilter = params.types;
+    },
   },
   actions: {
-    async getFilmsFromAPI(context) {
-      const Url = `http://localhost:8080/api/search`;
-      console.log(Url);
-      const data = await fetch(Url).then((response) => response.json());
-      console.log(data);
-      context.commit("set", data);
+    initializeFilters(context) {
+      context.commit("initializeFilters", {
+        genres: context.getters.getInitialGenres,
+        types: context.getters.getInitialTypes,
+      });
     },
     filterFilms(context, params) {
       context.commit("setParams", params);
@@ -47,12 +66,12 @@ export default createStore({
     async searchFilms(context) {
       let Url = "http://localhost:8080/api/search?genre=";
       for (const genre of context.state.genresFilter) {
-        Url = Url + `${genre},`;
+        Url = Url + `${genre.value},`;
       }
       Url = Url.slice(0, Url.length - 1);
       Url = Url + "&type=";
       for (const type of context.state.typeFilter) {
-        Url = Url + `${type},`;
+        Url = Url + `${type.value},`;
       }
       Url = Url.slice(0, Url.length - 1);
       if (context.state.nameFilter !== "") {

@@ -1,10 +1,4 @@
 <template>
-  <head>
-    <link
-      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-      rel="stylesheet"
-    />
-  </head>
   <div class="film-card">
     <img class="film-image" src="../assets/provisionalposter.png" />
     <div class="film-attributes">
