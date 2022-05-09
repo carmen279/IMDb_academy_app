@@ -1,13 +1,20 @@
 import { createStore } from "vuex";
+import {
+  requestFilms,
+  getInitialGenres,
+  getInitialTypes,
+} from "@/js/ApiInterface";
 
 export default createStore({
   state: {
-    films: { next: "", previous: "", results: [] as any[] },
+    films: { next: 2, previous: 0, results: [] as any[] },
     currentPage: 1,
     pageSize: 12,
     nameFilter: "",
     genresFilter: [] as { name: string; value: string }[],
     typeFilter: [] as { name: string; value: string }[],
+    initialGenres: [] as { name: string; value: string }[],
+    initialTypes: [] as { name: string; value: string }[],
   },
   getters: {
     currentPage(state) {
@@ -18,22 +25,6 @@ export default createStore({
     },
     previousPage(state) {
       return state.films.previous;
-    },
-    getInitialGenres(state) {
-      return [
-        { name: "Drama", value: "Drama" },
-        { name: "Crime", value: "Crime" },
-        { name: "Horror", value: "Horror" },
-        { name: "Action", value: "Action" },
-      ];
-    },
-    getInitialTypes(state) {
-      return [
-        { name: "TV Movie", value: "tvMovie" },
-        { name: "Short", value: "short" },
-        { name: "Videogame", value: "videogame" },
-        { name: "Video", value: "video" },
-      ];
     },
   },
   mutations: {
@@ -49,15 +40,17 @@ export default createStore({
       state.typeFilter = params.types;
     },
     initializeFilters(state, params) {
+      state.initialGenres = params.genres;
+      state.initialTypes = params.types;
       state.genresFilter = params.genres;
       state.typeFilter = params.types;
     },
   },
   actions: {
-    initializeFilters(context) {
+    async initializeFilters(context) {
       context.commit("initializeFilters", {
-        genres: context.getters.getInitialGenres,
-        types: context.getters.getInitialTypes,
+        genres: await getInitialGenres(),
+        types: await getInitialTypes(),
       });
     },
     filterFilms(context, params) {
@@ -65,50 +58,24 @@ export default createStore({
       context.dispatch("searchFilms");
     },
     async searchFilms(context) {
-      let Url = "http://localhost:8080/api/search?genre=";
-      for (const genre of context.state.genresFilter) {
-        Url = Url + `${genre.value},`;
-      }
-      Url = Url.slice(0, Url.length - 1);
-      Url = Url + "&type=";
-      for (const type of context.state.typeFilter) {
-        Url = Url + `${type.value},`;
-      }
-      Url = Url.slice(0, Url.length - 1);
-      if (context.state.nameFilter !== "") {
-        Url = Url + `&q=${context.state.nameFilter}`;
-      }
+      console.log(context.state.initialGenres);
 
-      Url =
-        Url +
-        `&from=${context.state.currentPage * context.state.pageSize}&size=${
+      context.commit(
+        "set",
+        await requestFilms(
+          context.state.genresFilter,
+          context.state.typeFilter,
+          context.state.nameFilter,
+          context.state.currentPage,
           context.state.pageSize
-        }`;
-      console.log(Url);
-      const data = await fetch(Url).then((response) => response.json());
-      console.log(data);
-      context.commit("set", data);
+        )
+      );
     },
     changePreviousPage(context) {
-      return fetch(context.state.films.previous)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-          context.commit("set", data);
-        })
-        .then((data) =>
-          context.commit("setPage", context.state.currentPage - 1)
-        )
-        .catch((err) => console.log(err));
+      context.state.films.previous++;
     },
     changeNextPage(context) {
-      return fetch(context.state.films.next)
-        .then((response) => response.json())
-        .then((data) => context.commit("set", data))
-        .then((data) =>
-          context.commit("setPage", context.state.currentPage + 1)
-        )
-        .catch((err) => console.log(err));
+      context.state.films.next++;
     },
   },
   modules: {},

@@ -2,25 +2,25 @@
   <div class="filter-container">
     <p class="filter-txt">Filter</p>
     <div class="filter-input">
-      <div class="checkbox-container">
+      <div class="checkbox-container" @click.prevent>
         <p>Genres:</p>
         <CheckboxGroup
           v-for="genre of initialGenres"
           :key="genre.value"
           :value="genre"
           :text="genre.name"
-          :model="checkedGenres"
+          model="genres"
           v-on:modelChange="changeGenres($event)"
         />
       </div>
-      <div class="checkbox-container">
+      <div class="checkbox-container" @click.prevent>
         <p>Type:</p>
         <CheckboxGroup
           v-for="type of initialTypes"
           :key="type.value"
           :value="type"
           :text="type.name"
-          :model="checkedTypes"
+          model="types"
           v-on:modelChange="changeTypes($event)"
         />
       </div>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, toRaw } from "vue";
 import CheckboxGroup from "@/components/CheckboxGroup";
 import createStore from "@/store";
 
@@ -43,35 +43,42 @@ export default defineComponent({
   },
   computed: {
     initialGenres() {
-      return createStore.getters.getInitialGenres;
+      return createStore.state.initialGenres;
     },
     initialTypes() {
-      return createStore.getters.getInitialTypes;
+      return createStore.state.initialTypes;
     },
   },
   methods: {
     sendSearch(genres, types) {
       this.$emit("filterChange", { genres: genres, types: types });
     },
-    changeGenres(newGenres) {
-      this.checkedGenres = newGenres;
+    changeGenres(genreChange) {
+      if (genreChange.selected) {
+        this.checkedGenres = [...toRaw(this.checkedGenres), genreChange.value];
+      } else {
+        this.checkedGenres = toRaw(this.checkedGenres).filter(
+          (genre) => genre.value != genreChange.value.value
+        );
+      }
+      this.sendSearch(this.checkedGenres, this.checkedTypes);
     },
-    changeTypes(newTypes) {
-      this.checkedTypes = newTypes;
+    changeTypes(typeChange) {
+      if (typeChange.selected) {
+        this.checkedTypes = [...toRaw(this.checkedTypes), typeChange.value];
+      } else {
+        this.checkedTypes = toRaw(this.checkedTypes).filter(
+          (type) => type.value != typeChange.value.value
+        );
+      }
+      this.sendSearch(this.checkedGenres, this.checkedTypes);
     },
   },
-  watch: {
-    checkedGenres(newChecked) {
-      this.sendSearch(newChecked, this.checkedTypes);
-    },
-    checkedTypes(newChecked) {
-      this.sendSearch(this.checkedGenres, newChecked);
-    },
-  },
-  beforeMount() {
-    createStore.dispatch("initializeFilters");
-    this.changeGenres(this.initialGenres);
-    this.changeTypes(this.initialTypes);
+  async mounted() {
+    await createStore.dispatch("initializeFilters");
+    this.checkedGenres = createStore.state.initialGenres;
+    this.checkedTypes = createStore.state.initialTypes;
+    this.sendSearch(this.checkedGenres, this.checkedTypes);
   },
 });
 </script>
@@ -120,11 +127,5 @@ export default defineComponent({
   color: #1d3536;
   font-weight: bold;
   font-size: 22px;
-}
-
-.checkbox {
-  size: 30px;
-  border: solid white 2px;
-  accent-color: #132425;
 }
 </style>

@@ -25,12 +25,14 @@ export default defineComponent({
   data() {
     return {
       text: "",
-      checkedGenres: ["Drama", "Crime", "Horror", "Action"],
-      checkedTypes: ["tvMovie", "short", "videogame", "video"],
+      checkedGenres: [],
+      checkedTypes: [],
     };
   },
   methods: {
     searchFilms(name, genres, types) {
+      this.checkedGenres = genres;
+      this.checkedTypes = types;
       createStore.dispatch("filterFilms", {
         name: name,
         genres: genres,
@@ -41,12 +43,6 @@ export default defineComponent({
   watch: {
     text(newText) {
       this.searchFilms(newText, this.checkedGenres, this.checkedTypes);
-    },
-    checkedGenres(newChecked) {
-      this.searchFilms(this.text, newChecked, this.checkedTypes);
-    },
-    checkedTypes(newChecked) {
-      this.searchFilms(this.text, this.checkedGenres, newChecked);
     },
   },
 });

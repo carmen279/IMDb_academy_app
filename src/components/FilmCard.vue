@@ -1,6 +1,6 @@
 <template>
   <div class="film-card">
-    <img class="film-image" src="../assets/provisionalposter.png" />
+    <img class="film-image" :src="image" />
     <div class="film-attributes">
       <p class="film-attribute film-attribute--title">
         {{ film.source.primaryTitle }}
@@ -22,6 +22,11 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: ["film"],
+  data() {
+    return {
+      image: require("../assets/no-poster-available.jpeg"),
+    };
+  },
   methods: {
     getGenres(genres) {
       let genrestr = "";
@@ -35,6 +40,18 @@ export default defineComponent({
       genrestr = genrestr.slice(0, genrestr.length - 2);
       return genrestr;
     },
+    async getImageLink() {
+      const data = await fetch(
+        `http://www.omdbapi.com/?i=${this.film.id}&apikey=ec48547c`
+      ).then((response) => response.json());
+
+      if (data.Poster !== "N/A" && data.Poster !== undefined) {
+        this.image = data.Poster;
+      }
+    },
+  },
+  mounted() {
+    this.getImageLink();
   },
 });
 </script>

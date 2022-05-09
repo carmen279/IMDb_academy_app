@@ -5,7 +5,8 @@
       type="checkbox"
       :id="value"
       :value="value"
-      v-model="checkedModel"
+      @click.stop="sendChange(value)"
+      checked
     />
     <label :for="value"> {{ text }} </label>
   </div>
@@ -15,20 +16,19 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  props: ["value", "text", "model"],
+  props: ["value", "text"],
   data() {
     return {
-      checkedModel: this.model,
+      selected: true,
     };
   },
   methods: {
-    sendChange(model) {
-      this.$emit("modelChange", model);
-    },
-  },
-  watch: {
-    checkedModel(newChecked) {
-      this.sendChange(newChecked);
+    sendChange(value) {
+      this.selected = !this.selected;
+      this.$emit("modelChange", {
+        value: value,
+        selected: this.selected,
+      });
     },
   },
 });
