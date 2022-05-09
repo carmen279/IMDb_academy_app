@@ -3,11 +3,15 @@
     <FilmCard v-for="film of getFilms" :key="film.id" :film="film" />
   </div>
   <div class="page-index">
-    <button v-if="previousPage" @click="this.changePreviousPage()">
+    <button
+      class="page-button"
+      v-if="previousPage"
+      @click="this.changePreviousPage()"
+    >
       {{ this.currentPage - 1 }}
     </button>
-    <p>{{ this.currentPage }}</p>
-    <button v-if="nextPage" @click="this.changeNextPage()">
+    <p class="page-txt">{{ this.currentPage }}</p>
+    <button class="page-button" v-if="nextPage" @click="this.changeNextPage()">
       {{ this.currentPage + 1 }}
     </button>
   </div>
@@ -42,6 +46,30 @@ export default defineComponent({
       35rem,
       auto
     );
+}
+
+.page-index {
+  display: flex;
+  justify-content: center;
+}
+
+.page-txt {
+  margin: 10px;
+  font-size: 20px;
+  color: #42b983;
+}
+.page-button {
+  padding: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #1d3536;
+  border: none;
+}
+
+.page-button:hover {
+  background-color: #42b983;
+  border-radius: 10px;
+  transition: 0.8s;
 }
 
 @media (max-width: 1600px) {

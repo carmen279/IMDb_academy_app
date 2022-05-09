@@ -58,8 +58,6 @@ export default createStore({
       context.dispatch("searchFilms");
     },
     async searchFilms(context) {
-      console.log(context.state.initialGenres);
-
       context.commit(
         "set",
         await requestFilms(
@@ -72,10 +70,16 @@ export default createStore({
       );
     },
     changePreviousPage(context) {
-      context.state.films.previous++;
+      context.state.currentPage--;
+      context.state.films.next--;
+      context.state.films.previous--;
+      context.dispatch("searchFilms");
     },
     changeNextPage(context) {
+      context.state.currentPage++;
       context.state.films.next++;
+      context.state.films.previous++;
+      context.dispatch("searchFilms");
     },
   },
   modules: {},
