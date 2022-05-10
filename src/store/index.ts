@@ -69,17 +69,23 @@ export default createStore({
         )
       );
     },
-    changePreviousPage(context) {
-      context.state.currentPage--;
-      context.state.films.next--;
-      context.state.films.previous--;
-      context.dispatch("searchFilms");
+    async addFilms(context) {
+      context.commit("set", [
+        ...context.state.films.results,
+        ...(await requestFilms(
+          context.state.genresFilter,
+          context.state.typeFilter,
+          context.state.nameFilter,
+          context.state.currentPage,
+          context.state.pageSize
+        )),
+      ]);
     },
     changeNextPage(context) {
       context.state.currentPage++;
       context.state.films.next++;
       context.state.films.previous++;
-      context.dispatch("searchFilms");
+      context.dispatch("addFilms");
     },
   },
   modules: {},

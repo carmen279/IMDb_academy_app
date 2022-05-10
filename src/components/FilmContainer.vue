@@ -2,39 +2,21 @@
   <div class="filmcontainer">
     <FilmCard v-for="film of getFilms" :key="film.id" :film="film" />
   </div>
-  <div class="page-index">
-    <button
-      class="page-button"
-      v-if="previousPage"
-      @click="this.changePreviousPage()"
-    >
-      {{ this.currentPage - 1 }}
-    </button>
-    <p class="page-txt">{{ this.currentPage }}</p>
-    <button class="page-button" v-if="nextPage" @click="this.changeNextPage()">
-      {{ this.currentPage + 1 }}
-    </button>
-  </div>
 </template>
 
 <script>
 import FilmCard from "@/components/FilmCard";
 import { defineComponent } from "vue";
 import createStore from "@/store/index";
-import { mapActions, mapGetters } from "vuex";
 
 export default defineComponent({
   components: {
     FilmCard,
   },
   computed: {
-    ...mapGetters(["nextPage", "previousPage", "currentPage"]),
     getFilms() {
       return createStore.state.films.results;
     },
-  },
-  methods: {
-    ...mapActions(["searchFilms", "changeNextPage", "changePreviousPage"]),
   },
 });
 </script>

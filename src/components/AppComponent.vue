@@ -30,8 +30,42 @@
 
 <script>
 import { defineComponent } from "vue";
+import createStore from "@/store";
 
-export default defineComponent({});
+export default defineComponent({
+  data() {
+    return {
+      observerTarget: {},
+    };
+  },
+  mounted() {
+    window.addEventListener(
+      "load",
+      (event) => {
+        this.observerTarget = document.querySelector(".footer__div");
+        this.createObserver();
+      },
+      false
+    );
+  },
+  methods: {
+    createObserver() {
+      let observer;
+      let options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      };
+      observer = new IntersectionObserver(this.handleIntersect, options);
+      observer.observe(this.observerTarget);
+    },
+    handleIntersect(entries, observer) {
+      entries.forEach((entry) => {
+        createStore.dispatch("changeNextPage");
+      });
+    },
+  },
+});
 </script>
 
 <style scoped lang="scss">
