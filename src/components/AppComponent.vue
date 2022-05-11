@@ -196,17 +196,14 @@ header {
   }
 
   .switch-button {
-    background: rgba(255, 255, 255, 0.56);
+    background-color: rgba(95, 133, 134, 0.91);
     border-radius: 30px;
     overflow: hidden;
-    width: 240px;
     text-align: center;
     font-size: 18px;
-    letter-spacing: 1px;
-    color: #155fff;
+    color: #132425;
     position: relative;
     padding-right: 120px;
-    position: relative;
 
     &:before {
       content: "Dani's API";
@@ -223,7 +220,6 @@ header {
     }
 
     &-checkbox {
-      cursor: pointer;
       position: absolute;
       top: 0;
       left: 0;
@@ -240,14 +236,14 @@ header {
 
       & + .switch-button-label {
         position: relative;
-        padding: 15px 0;
+        padding: 15px 10px;
         display: block;
         user-select: none;
         pointer-events: none;
 
         &:before {
           content: "";
-          background: #fff;
+          background-color: #82b9a1;
           height: 100%;
           width: 100%;
           position: absolute;
