@@ -84,6 +84,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+p {
+  font-size: 22px;
+}
+
 .filter-container {
   background: #82b9a1;
   height: 30px;
@@ -126,6 +130,6 @@ export default defineComponent({
 .filter-container .filter-txt {
   color: #1d3536;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 24px;
 }
 </style>

@@ -35,6 +35,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.checkbox-group {
+  font-size: 22px;
+}
 .checkbox {
   size: 30px;
   border: solid white 2px;

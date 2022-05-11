@@ -8,7 +8,7 @@ import {
 export default createStore({
   state: {
     films: { next: 2, previous: 0, results: [] as any[] },
-    currentPage: 1,
+    currentPage: 0,
     pageSize: 12,
     nameFilter: "",
     genresFilter: [] as { name: string; value: string }[],

@@ -1,6 +1,11 @@
 <template>
   <div class="filmcontainer">
-    <FilmCard v-for="film of getFilms" :key="film.id" :film="film" />
+    <FilmCard
+      v-for="film of getFilms"
+      :key="film.id"
+      :film="film"
+      @click="$router.push({ path: '/details', query: { id: `${film.id}` } })"
+    />
   </div>
 </template>
 

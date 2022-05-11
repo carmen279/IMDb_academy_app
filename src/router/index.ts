@@ -25,6 +25,16 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/InsightsView.vue"),
   },
+  {
+    path: "/details",
+    name: "details",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/DetailsView.vue"),
+    props: (route) => ({ query: route.query.id }),
+  },
 ];
 
 const router = createRouter({

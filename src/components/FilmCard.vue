@@ -30,14 +30,18 @@ export default defineComponent({
   methods: {
     getGenres(genres) {
       let genrestr = "";
-      for (let genre of genres) {
-        if (genre !== "\\N") {
-          genrestr = genrestr + genre + ", ";
-        } else {
-          genrestr = genrestr + "Unknown" + ", ";
+      if (typeof genres !== "string") {
+        for (let genre of genres) {
+          if (genre !== "\\N") {
+            genrestr = genrestr + genre + ", ";
+          } else {
+            genrestr = genrestr + "Unknown" + ", ";
+          }
         }
+        genrestr = genrestr.slice(0, genrestr.length - 2);
+      } else {
+        genrestr = genres;
       }
-      genrestr = genrestr.slice(0, genrestr.length - 2);
       return genrestr;
     },
     async getImageLink() {
@@ -62,6 +66,7 @@ export default defineComponent({
   border: 2px solid #42b983;
   border-radius: 20px;
   font-size: 18px;
+  backdrop-filter: blur(6px);
 }
 
 .film-image {
