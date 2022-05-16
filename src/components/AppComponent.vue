@@ -19,7 +19,7 @@
   </header>
   <router-view />
   <footer>
-    <div class="footer__div">
+    <div class="footer__div" ref="footer">
       <p>
         Author: Carmen Rendueles Martínez (
         <a href="https://github.com/carmen279">Github</a>
@@ -36,41 +36,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import createStore from "@/store";
 
 export default defineComponent({
-  data() {
-    return {
-      observerTarget: {},
-    };
-  },
-  mounted() {
-    window.addEventListener(
-      "load",
-      (event) => {
-        this.observerTarget = document.querySelector(".footer__div");
-        this.createObserver();
-      },
-      false
-    );
-  },
-  methods: {
-    createObserver() {
-      let observer;
-      let options = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
-      };
-      observer = new IntersectionObserver(this.handleIntersect, options);
-      observer.observe(this.observerTarget);
-    },
-    handleIntersect(entries, observer) {
-      entries.forEach((entry) => {
-        createStore.dispatch("changeNextPage");
-      });
-    },
-  },
+  methods: {},
 });
 </script>
 
@@ -95,11 +63,16 @@ header {
   background-color: #081010;
   height: 60px;
   padding-right: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
 
   a {
     font-size: 24px;
     font-weight: bold;
-    color: #82b9a1;
+    color: #ffffff;
     padding: 30px;
     text-decoration: none;
 
@@ -132,7 +105,7 @@ header {
   }
 
   .navicon {
-    background: #82b9a1;
+    background: #ffffff;
     display: block;
     height: 2.5px;
     width: 22px;
@@ -142,7 +115,7 @@ header {
 
   .navicon:before,
   .navicon:after {
-    background: #82b9a1;
+    background: #ffffff;
     content: "";
     display: block;
     height: 100%;

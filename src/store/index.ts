@@ -7,7 +7,7 @@ import {
 
 export default createStore({
   state: {
-    films: { next: 2, previous: 0, results: [] as any[] },
+    films: [] as any[],
     currentPage: 0,
     pageSize: 12,
     nameFilter: "",
@@ -20,16 +20,10 @@ export default createStore({
     currentPage(state) {
       return state.currentPage;
     },
-    nextPage(state) {
-      return state.films.next;
-    },
-    previousPage(state) {
-      return state.films.previous;
-    },
   },
   mutations: {
     set(state, elems) {
-      state.films.results = elems;
+      state.films = elems;
     },
     setPage(state, newPage) {
       state.currentPage = newPage;
@@ -58,6 +52,8 @@ export default createStore({
       context.dispatch("searchFilms");
     },
     async searchFilms(context) {
+      context.state.currentPage = 1;
+
       context.commit(
         "set",
         await requestFilms(
@@ -71,7 +67,7 @@ export default createStore({
     },
     async addFilms(context) {
       context.commit("set", [
-        ...context.state.films.results,
+        ...context.state.films,
         ...(await requestFilms(
           context.state.genresFilter,
           context.state.typeFilter,
@@ -83,9 +79,10 @@ export default createStore({
     },
     changeNextPage(context) {
       context.state.currentPage++;
-      context.state.films.next++;
-      context.state.films.previous++;
       context.dispatch("addFilms");
+    },
+    initializePageCounter(context) {
+      context.state.currentPage = 0;
     },
   },
   modules: {},

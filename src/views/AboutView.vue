@@ -58,6 +58,7 @@
 </template>
 <style scoped lang="scss">
 h1 {
+  margin-top: 100px;
   font-size: 48px;
   text-shadow: 0 0 15px #1d3536, 0 0 20px #265254, 0 0 25px #1d3536;
 }
@@ -74,6 +75,14 @@ section {
   margin: 0px 80px 30px 80px;
   border-radius: 30px 0px 30px 0px;
   backdrop-filter: blur(6px);
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 5%,
+    rgba(0, 0, 0, 0.2) 10%,
+    rgba(0, 0, 0, 0.7) 70%,
+    rgba(0, 0, 0, 0.9) 80%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 
 p {

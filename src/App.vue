@@ -24,7 +24,6 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background-color: #1d3536;
-  background-image: url("~@/assets/img.png");
+  background-image: url("~@/assets/img_1.jpg");
 }
 </style>

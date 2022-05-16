@@ -1,24 +1,32 @@
 <template>
-  <div class="film-card">
-    <img class="film-image" :src="image" />
-    <div class="film-attributes">
-      <p class="film-attribute film-attribute--title">
-        {{ film.source.primaryTitle }}
-      </p>
-      <p class="film-attribute">
-        {{ film.source.runtimeMinutes }} min |
-        {{ getGenres(film.source.genres) }}
-      </p>
-      <p class="film-attribute">
-        <i class="fas fa-star"></i>
-        {{ film.source.averageRating }}
-      </p>
+  <div class="card">
+    <div
+      class="card-background"
+      :style="{ backgroundImage: `url(${image})` }"
+    ></div>
+    <div class="film-card">
+      <img class="film-image" :src="image" />
+      <div class="film-attributes">
+        <p class="film-attribute film-attribute--title">
+          {{ film.source.primaryTitle }}
+        </p>
+        <p class="film-attribute">
+          {{ film.source.runtimeMinutes }} min |
+          {{ getGenres(film.source.genres) }}
+        </p>
+        <p class="film-attribute">
+          <i class="fas fa-star"></i>
+          {{ film.source.averageRating }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue";
+import { arrayToString } from "@/js/utils";
+import { getImageLink } from "@/js/ApiInterface";
 
 export default defineComponent({
   props: ["film"],
@@ -29,28 +37,13 @@ export default defineComponent({
   },
   methods: {
     getGenres(genres) {
-      let genrestr = "";
-      if (typeof genres !== "string") {
-        for (let genre of genres) {
-          if (genre !== "\\N") {
-            genrestr = genrestr + genre + ", ";
-          } else {
-            genrestr = genrestr + "Unknown" + ", ";
-          }
-        }
-        genrestr = genrestr.slice(0, genrestr.length - 2);
-      } else {
-        genrestr = genres;
-      }
-      return genrestr;
+      return arrayToString(genres);
     },
     async getImageLink() {
-      const data = await fetch(
-        `http://www.omdbapi.com/?i=${this.film.id}&apikey=ec48547c`
-      ).then((response) => response.json());
+      const imgLink = await getImageLink(this.film.id);
 
-      if (data.Poster !== "N/A" && data.Poster !== undefined) {
-        this.image = data.Poster;
+      if (imgLink !== "") {
+        this.image = imgLink;
       }
     },
   },
@@ -61,12 +54,39 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.film-card {
+.card {
   margin: 20px;
   border: 2px solid #42b983;
   border-radius: 20px;
+}
+
+.film-card,
+.card-background {
   font-size: 18px;
-  backdrop-filter: blur(6px);
+  position: relative;
+  left: 0;
+}
+
+.film-card {
+  z-index: 1;
+  top: -100%;
+  height: 100%;
+  border-radius: 20px;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 40%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.7) 60%,
+    rgba(0, 0, 0, 0.9) 80%,
+    rgba(0, 0, 0, 1) 100%
+  );
+}
+
+.card-background {
+  filter: blur(8px);
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .film-image {
