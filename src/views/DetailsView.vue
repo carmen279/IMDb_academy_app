@@ -22,13 +22,5 @@ h1 {
 }
 .details {
   margin-top: 80px;
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0) 5%,
-    rgba(0, 0, 0, 0.2) 10%,
-    rgba(0, 0, 0, 0.7) 70%,
-    rgba(0, 0, 0, 0.9) 80%,
-    rgba(0, 0, 0, 1) 100%
-  );
 }
 </style>

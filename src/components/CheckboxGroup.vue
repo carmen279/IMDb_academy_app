@@ -3,12 +3,15 @@
     <input
       class="checkbox"
       type="checkbox"
-      :id="value"
-      :value="value"
-      @click.stop="sendChange(value)"
+      :id="value.value"
+      :value="value.value"
+      ref="checkbox"
+      @click="sendChange(value)"
       checked
     />
-    <label :for="value"> {{ text }} </label>
+    <label :for="value.value" @click.prevent="sendChange(value)">
+      {{ text }}
+    </label>
   </div>
 </template>
 
@@ -25,6 +28,7 @@ export default defineComponent({
   methods: {
     sendChange(value) {
       this.selected = !this.selected;
+      this.$refs.checkbox.checked = this.selected;
       this.$emit("modelChange", {
         value: value,
         selected: this.selected,

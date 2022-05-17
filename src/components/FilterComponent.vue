@@ -2,7 +2,7 @@
   <div class="filter-container">
     <p class="filter-txt">Filter</p>
     <div class="filter-input">
-      <div class="checkbox-container" @click.prevent>
+      <div class="checkbox-container">
         <p>Genres:</p>
         <CheckboxGroup
           v-for="genre of initialGenres"
@@ -13,7 +13,7 @@
           v-on:modelChange="changeGenres($event)"
         />
       </div>
-      <div class="checkbox-container" @click.prevent>
+      <div class="checkbox-container">
         <p>Type:</p>
         <CheckboxGroup
           v-for="type of initialTypes"

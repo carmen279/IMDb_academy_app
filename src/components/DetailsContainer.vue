@@ -51,6 +51,17 @@
         >{{ toString(film.crew) }}
       </p>
     </div>
+    <div class="film-suggestions">
+      <h1 class="suggestions-title">You may also like...</h1>
+      <div class="suggestion-container">
+        <FilmCard
+          v-for="suggestion of film.suggestions"
+          :key="suggestion.id"
+          :film="suggestion"
+          @click="navigateToFilm(`${suggestion.id}`)"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -58,9 +69,13 @@
 import { defineComponent } from "vue";
 import { getImageAndPlot, requestFilmDetails } from "@/js/ApiInterface";
 import { arrayToString, removeCamelCase } from "@/js/utils";
+import FilmCard from "@/components/FilmCard";
 
 export default defineComponent({
   props: ["filmId"],
+  components: {
+    FilmCard,
+  },
   data() {
     return {
       film: {},
@@ -77,17 +92,18 @@ export default defineComponent({
     },
     async getImageAndPlot() {
       const img_plot = await getImageAndPlot(this.filmId);
-
-      console.log(img_plot);
-      if (img_plot.poster !== "N/A" && img_plot.poster !== undefined) {
-        this.image = img_plot.poster;
-      }
-      if (img_plot.plot !== "N/A" && img_plot.plot !== undefined) {
-        this.plot = img_plot.plot;
-      }
+      this.image = img_plot.poster !== "" ? img_plot.poster : this.image;
+      this.plot = img_plot.plot !== "" ? img_plot.plot : this.plot;
     },
     async getFilmDetails() {
       this.film = await requestFilmDetails(this.filmId);
+    },
+    navigateToFilm(filmId) {
+      window.scrollTo(0, 0);
+      this.$router.push({
+        path: "/details",
+        query: { id: filmId },
+      });
     },
   },
   mounted() {
@@ -106,6 +122,14 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 5%,
+    rgba(0, 0, 0, 0.2) 10%,
+    rgba(0, 0, 0, 0.7) 20%,
+    rgba(0, 0, 0, 0.9) 70%,
+    rgba(0, 0, 0, 1) 100%
+  );
 }
 .film-info {
   display: flex;
@@ -156,5 +180,19 @@ export default defineComponent({
   font-weight: bold;
   font-style: italic;
   padding-right: 20px;
+}
+.suggestion-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+.film-suggestions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 50px;
+}
+.suggestions-title {
+  margin-left: 50px;
+  font-size: 36px;
 }
 </style>

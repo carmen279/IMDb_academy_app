@@ -17,7 +17,7 @@
       </div>
     </nav>
   </header>
-  <router-view />
+  <router-view :key="$route.fullPath" />
   <footer>
     <div class="footer__div" ref="footer">
       <p>

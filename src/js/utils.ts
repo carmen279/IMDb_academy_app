@@ -3,24 +3,19 @@ import createStore from "@/store";
 //Methods for text formats
 
 export function arrayToString(array: any) {
-  let arraystr = "";
-  if (typeof array !== "string" && typeof array === typeof []) {
-    for (const elem of array) {
-      if (elem !== "\\N") {
-        arraystr = arraystr + elem + ", ";
-      } else {
-        arraystr = arraystr + "Unknown" + ", ";
-      }
-    }
-    arraystr = arraystr.slice(0, arraystr.length - 2);
-  } else {
-    arraystr = array;
-  }
-  return arraystr;
+  return typeof array === typeof []
+    ? array
+        .reduce(
+          (actualstr: string, elem: any) =>
+            elem !== "\\N" ? `${actualstr}${elem}, ` : `${actualstr}Unknown, `,
+          ""
+        )
+        .slice(0, -2)
+    : array;
 }
 
 export function removeCamelCase(str: string) {
-  if (str !== undefined) {
+  if (str) {
     return (
       str
         // insert a space between lower & upper
@@ -55,14 +50,12 @@ export function removeIntersectionObserver(
   observer: IntersectionObserver,
   observerTarget: Element
 ) {
-  console.log(observer);
-  console.log(observerTarget);
   observer.unobserve(observerTarget);
   createStore.dispatch("initializePageCounter");
 }
 
 function handleIntersect(entries: any[], observer: any) {
   entries.forEach((entry) => {
-    createStore.dispatch("changeNextPage");
+    createStore.dispatch("getMoreFilms");
   });
 }

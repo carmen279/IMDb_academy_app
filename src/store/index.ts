@@ -17,12 +17,18 @@ export default createStore({
     initialTypes: [] as { name: string; value: string }[],
   },
   getters: {
-    currentPage(state) {
-      return state.currentPage;
+    getActualFilters(state) {
+      return {
+        genres: state.genresFilter,
+        types: state.typeFilter,
+        text: state.nameFilter,
+        currentPage: state.currentPage,
+        pageSize: state.pageSize,
+      };
     },
   },
   mutations: {
-    set(state, elems) {
+    setFilms(state, elems) {
       state.films = elems;
     },
     setPage(state, newPage) {
@@ -53,33 +59,17 @@ export default createStore({
     },
     async searchFilms(context) {
       context.state.currentPage = 1;
-
       context.commit(
-        "set",
-        await requestFilms(
-          context.state.genresFilter,
-          context.state.typeFilter,
-          context.state.nameFilter,
-          context.state.currentPage,
-          context.state.pageSize
-        )
+        "setFilms",
+        await requestFilms(context.getters.getActualFilters)
       );
     },
-    async addFilms(context) {
-      context.commit("set", [
-        ...context.state.films,
-        ...(await requestFilms(
-          context.state.genresFilter,
-          context.state.typeFilter,
-          context.state.nameFilter,
-          context.state.currentPage,
-          context.state.pageSize
-        )),
-      ]);
-    },
-    changeNextPage(context) {
+    async getMoreFilms(context) {
       context.state.currentPage++;
-      context.dispatch("addFilms");
+      context.commit("setFilms", [
+        ...context.state.films,
+        ...(await requestFilms(context.getters.getActualFilters)),
+      ]);
     },
     initializePageCounter(context) {
       context.state.currentPage = 0;
