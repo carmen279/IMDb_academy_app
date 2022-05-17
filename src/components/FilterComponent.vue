@@ -4,25 +4,29 @@
     <div class="filter-input">
       <div class="checkbox-container">
         <p>Genres:</p>
-        <CheckboxGroup
-          v-for="genre of initialGenres"
-          :key="genre.value"
-          :value="genre"
-          :text="genre.name"
-          model="genres"
-          v-on:modelChange="changeGenres($event)"
-        />
+        <div class="checkboxes">
+          <CheckboxGroup
+            v-for="genre of initialGenres"
+            :key="genre.value"
+            :value="genre"
+            :text="genre.name"
+            model="genres"
+            v-on:modelChange="changeGenres($event)"
+          />
+        </div>
       </div>
       <div class="checkbox-container">
         <p>Type:</p>
-        <CheckboxGroup
-          v-for="type of initialTypes"
-          :key="type.value"
-          :value="type"
-          :text="type.name"
-          model="types"
-          v-on:modelChange="changeTypes($event)"
-        />
+        <div class="checkboxes">
+          <CheckboxGroup
+            v-for="type of initialTypes"
+            :key="type.value"
+            :value="type"
+            :text="type.name"
+            model="types"
+            v-on:modelChange="changeTypes($event)"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -89,7 +93,8 @@ p {
 }
 
 .filter-container {
-  background: #82b9a1;
+  background: #081010;
+  border: solid 2px #42b983;
   height: 30px;
   border-radius: 30px;
   padding: 10px 20px;
@@ -109,6 +114,7 @@ p {
   width: fit-content;
   height: fit-content;
   display: flex;
+  flex-direction: column;
 }
 
 .filter-container:hover {
@@ -128,8 +134,14 @@ p {
 }
 
 .filter-container .filter-txt {
-  color: #1d3536;
+  color: #42b983;
   font-weight: bold;
   font-size: 24px;
+  padding: 50px;
+}
+
+.checkboxes {
+  display: flex;
+  flex-flow: row wrap;
 }
 </style>
