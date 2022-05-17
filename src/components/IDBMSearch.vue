@@ -19,6 +19,7 @@
 import { defineComponent } from "vue";
 import createStore from "@/store";
 import FilterComponent from "@/components/FilterComponent";
+import _ from "lodash";
 
 export default defineComponent({
   components: { FilterComponent },
@@ -39,10 +40,18 @@ export default defineComponent({
         types: types,
       });
     },
+    debounceMethod: _.debounce((fn, newText, genres, types) => {
+      fn(newText, genres, types);
+    }, 1000),
   },
   watch: {
     text(newText) {
-      this.searchFilms(newText, this.checkedGenres, this.checkedTypes);
+      this.debounceMethod(
+        this.searchFilms,
+        newText,
+        this.checkedGenres,
+        this.checkedTypes
+      );
     },
   },
 });
