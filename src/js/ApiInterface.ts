@@ -2,6 +2,7 @@ import { removeCamelCase } from "@/js/utils";
 import { getOmdbAPIKey } from "@/js/secretsLocker";
 
 const baseSearchUrl = "http://localhost:8080/api/search";
+const baseSearchByIdUrl = "http://localhost:8080/api/id_search";
 
 //---------- MAIN INTERFACE METHODS ----------
 
@@ -9,57 +10,30 @@ const baseSearchUrl = "http://localhost:8080/api/search";
 Request films from the search API meeting the criteria required in the state parameter
  */
 export async function requestFilms(state: any) {
-  return await fetch(`${baseSearchUrl}${getFilters(state)}`).then((response) =>
-    response.json()
+  const data = { content: [], suggestions: [] as any[] };
+  data.content = await fetch(`${baseSearchUrl}${getFilters(state)}`).then(
+    (response) => response.json()
   );
-}
-
-async function getSuggestions(id: string, genres: any[]) {
-  const params = {
-    genres: genres.map((genre) => ({ value: genre })),
-    types: [],
-    pageSize: 6,
-    currentPage: 1,
-    text: "",
-  };
-  const suggestions = await requestFilms(params);
-  console.log(id);
-  return suggestions.filter((film: any) => film.id !== id).slice(0, 5);
+  data.suggestions = ["Suggestion 1", "Suggestion 2", "Suggestion 3"];
+  return data;
 }
 
 /*
 Request data of a film from the search API given the film's IMDb id
  */
 export async function requestFilmDetails(filmId: string) {
-  /*
-  const filmDetail = await fetch(`${baseSearchUrl}?id=${filmId}`).then((response) => response.json());
-   */
-  const filmDetail: any = {
-    id: "tt6372392",
-    primaryTitle: "Turtle Power half shell Squad",
-    titleType: "tvSeries",
-    genres: ["Comedy", "Short"],
-    language: "English",
-    startYear: 2019,
-    runtimeMinutes: 0,
-    averageRating: 0.0,
-    directors: ["Ryan Murphy"],
-    crew: ["Meryl Streep (Pepa)", "Mario Casas (Pepe)"],
+  const filmDetail = (
+    await fetch(`${baseSearchByIdUrl}?id=${filmId}`).then((response) =>
+      response.json()
+    )
+  )[0];
 
-    //Para serie
-    seasonnum: 5,
-    episodesnum: 100,
-    //Para episodio
-    seasonNumber: 1,
-    episodeNumber: 1,
-    parentTconst: "tt9536914",
-  };
-  filmDetail.suggestions = await getSuggestions(
+  filmDetail.source.suggestions = await getSuggestions(
     filmDetail.id,
-    filmDetail.genres
+    filmDetail.source.genres
   );
-  console.log(filmDetail);
-  return filmDetail;
+
+  return filmDetail.source;
 }
 
 /*
@@ -134,7 +108,7 @@ async function fetchAggregation(field: string) {
       )
     )
       //Filters non-valid elements
-      .filter((elem: any) => elem.key != "\\N")
+      .filter((elem: any) => elem.key != "\\N" && elem.key != "Adult")
       //Maps to a response object that includes a beautified version as name
       .map((elem: any) => ({
         name: removeCamelCase(elem.key),
@@ -150,4 +124,19 @@ async function fetchFromOmdb(filmId: string) {
   return await fetch(
     `http://www.omdbapi.com/?i=${filmId}&apikey=${getOmdbAPIKey()}`
   ).then((response) => response.json());
+}
+
+/*
+Finds the IMDb elements suggested for another one depending on its genres
+ */
+async function getSuggestions(id: string, genres: any[]) {
+  const params = {
+    genres: genres.map((genre) => ({ value: genre })),
+    types: [],
+    pageSize: 6,
+    currentPage: 1,
+    text: "",
+  };
+  const suggestions = await requestFilms(params);
+  return suggestions.content.filter((film: any) => film.id !== id).slice(0, 5);
 }

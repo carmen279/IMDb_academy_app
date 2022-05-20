@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="checkbox-container">
-        <p>Type:</p>
+        <p>Types:</p>
         <div class="checkboxes">
           <CheckboxGroup
             v-for="type of initialTypes"

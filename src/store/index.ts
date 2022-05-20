@@ -8,6 +8,7 @@ import {
 export default createStore({
   state: {
     films: [] as any[],
+    textsuggestions: [] as string[],
     currentPage: 0,
     pageSize: 12,
     nameFilter: "",
@@ -30,6 +31,9 @@ export default createStore({
   mutations: {
     setFilms(state, elems) {
       state.films = elems;
+    },
+    setSuggestions(state, elems) {
+      state.textsuggestions = elems;
     },
     setPage(state, newPage) {
       state.currentPage = newPage;
@@ -59,16 +63,15 @@ export default createStore({
     },
     async searchFilms(context) {
       context.state.currentPage = 1;
-      context.commit(
-        "setFilms",
-        await requestFilms(context.getters.getActualFilters)
-      );
+      const response = await requestFilms(context.getters.getActualFilters);
+      context.commit("setSuggestions", response.suggestions);
+      context.commit("setFilms", response.content);
     },
     async getMoreFilms(context) {
       context.state.currentPage++;
       context.commit("setFilms", [
         ...context.state.films,
-        ...(await requestFilms(context.getters.getActualFilters)),
+        ...(await requestFilms(context.getters.getActualFilters)).content,
       ]);
     },
     initializePageCounter(context) {

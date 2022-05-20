@@ -11,6 +11,9 @@ import DetailsContainer from "@/components/DetailsContainer.vue";
 
 @Options({
   components: { DetailsContainer },
+  mounted() {
+    window.scrollTo(0, 0);
+  },
 })
 export default class HomeView extends Vue {}
 </script>

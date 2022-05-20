@@ -8,22 +8,6 @@
           <p class="film-attribute film-attribute--title">
             {{ cleanCamelCase(film.titleType) }}
           </p>
-          <p
-            class="conditional-info"
-            v-if="
-              film.titleType === 'tvSeries' || film.titleType === 'tvMiniSeries'
-            "
-          >
-            - {{ film.seasonnum }} seasons - {{ film.episodesnum }} episodes
-          </p>
-          <p
-            class="conditional-info"
-            v-if="
-              film.titleType === 'tvEpisode' || film.titleType === 'tvSpecial'
-            "
-          >
-            - Season {{ film.seasonNumber }} - Episode {{ film.episodeNumber }})
-          </p>
         </div>
         <div class="parallel-attributes">
           <p class="film-attribute">

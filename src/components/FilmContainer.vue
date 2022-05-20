@@ -20,7 +20,6 @@ export default defineComponent({
   },
   computed: {
     getFilms() {
-      console.log(createStore.state.films);
       return createStore.state.films;
     },
   },

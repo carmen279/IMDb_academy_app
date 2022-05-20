@@ -9,12 +9,6 @@
       <router-link to="/">Home</router-link>
       <router-link to="/insights">Insights</router-link>
       <router-link to="/about">About</router-link>
-      <div class="switch-button">
-        <input class="switch-button-checkbox" type="checkbox" />
-        <label class="switch-button-label"
-          ><span class="switch-button-label-span">Marcos' API</span></label
-        >
-      </div>
     </nav>
   </header>
   <router-view :key="$route.fullPath" />
