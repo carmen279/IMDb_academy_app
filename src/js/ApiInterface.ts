@@ -14,7 +14,8 @@ export async function requestFilms(state: any) {
   data.content = await fetch(`${baseSearchUrl}${getFilters(state)}`).then(
     (response) => response.json()
   );
-  data.suggestions = ["Suggestion 1", "Suggestion 2", "Suggestion 3"];
+  console.log(`${baseSearchUrl}${getFilters(state)}`);
+  data.suggestions = [];
   return data;
 }
 
@@ -33,6 +34,7 @@ export async function requestFilmDetails(filmId: string) {
     filmDetail.source.genres
   );
 
+  console.log(filmDetail.source);
   return filmDetail.source;
 }
 

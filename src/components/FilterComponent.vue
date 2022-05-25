@@ -28,6 +28,16 @@
           />
         </div>
       </div>
+      <div class="checkbox-container">
+        <p>Minimum rating:</p>
+        <div class="num-block skin-2">
+          <div class="num-in">
+            <span class="minus dis"></span>
+            <input type="text" class="in-num" value="1" readonly="" />
+            <span class="plus"></span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +100,10 @@ p {
   font-size: 22px;
 }
 
+.checked {
+  color: #42b983;
+}
+
 .filter-container {
   background: #081010;
   border: solid 2px #42b983;
@@ -141,5 +155,48 @@ p {
 .checkboxes {
   display: flex;
   flex-flow: row wrap;
+}
+
+/* skin 2 */
+.skin-2 .num-in {
+  background: #ffffff;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 25px;
+  height: 40px;
+  width: 110px;
+  float: left;
+}
+
+.skin-2 .num-in span {
+  width: 40%;
+  display: block;
+  height: 40px;
+  float: left;
+  position: relative;
+}
+
+.skin-2 .num-in span:before,
+.skin-2 .num-in span:after {
+  content: "";
+  position: absolute;
+  background-color: #667780;
+  height: 2px;
+  width: 10px;
+  top: 50%;
+  left: 50%;
+  margin-top: -1px;
+  margin-left: -5px;
+}
+
+.skin-2 .num-in span.plus:after {
+  transform: rotate(90deg);
+}
+
+.skin-2 .num-in input {
+  float: left;
+  width: 20%;
+  height: 40px;
+  border: none;
+  text-align: center;
 }
 </style>

@@ -27,12 +27,8 @@
     <div class="film-details">
       <p class="film-attribute film-plot">{{ plot }}</p>
       <p class="film-attribute film-crew">
-        <span class="film-attribute--title">Directed by: </span
-        >{{ toString(film.directors) }}
-      </p>
-      <p class="film-attribute film-crew">
-        <span class="film-attribute--title">Cast: </span
-        >{{ toString(film.crew) }}
+        <span class="film-attribute--title">Characters: </span
+        >{{ getPrincipals }}
       </p>
     </div>
     <div class="film-suggestions">
@@ -67,6 +63,24 @@ export default defineComponent({
       plot: "No description available",
     };
   },
+  computed: {
+    getPrincipals() {
+      if (this.film.principals) {
+        return this.toString(
+          this.film.principals
+            .filter((actor) => actor.characters !== "\\N")
+            .map((actor) =>
+              actor.characters.startsWith('["')
+                ? actor.characters.slice(2, -2)
+                : actor.characters
+            )
+        );
+      }
+
+      return "No principals available to show";
+    },
+  },
+
   methods: {
     toString(array) {
       return arrayToString(array);
