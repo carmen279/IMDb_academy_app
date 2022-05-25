@@ -1,7 +1,12 @@
 import createStore from "@/store";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as d3 from "../../node_modules/d3";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as _ from "lodash";
 
 //Methods for text formats
-
 export function arrayToString(array: any) {
   return typeof array === typeof []
     ? array
@@ -59,3 +64,5 @@ function handleIntersect(entries: any[], observer: any) {
     createStore.dispatch("getMoreFilms");
   });
 }
+
+//export function createBubbleChart() {}

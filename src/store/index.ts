@@ -46,8 +46,6 @@ export default createStore({
     initializeFilters(state, params) {
       state.initialGenres = params.genres;
       state.initialTypes = params.types;
-      state.genresFilter = params.genres;
-      state.typeFilter = params.types;
     },
   },
   actions: {

@@ -38,7 +38,7 @@
 import { defineComponent } from "vue";
 import createStore from "@/store";
 import FilterComponent from "@/components/FilterComponent";
-import _ from "lodash";
+import debounce from "lodash/debounce";
 
 export default defineComponent({
   components: { FilterComponent },
@@ -65,7 +65,7 @@ export default defineComponent({
         types: types,
       });
     },
-    debounceMethod: _.debounce((fn, newText, genres, types) => {
+    debounceMethod: debounce((fn, newText, genres, types) => {
       fn(newText, genres, types);
     }, 1000),
   },

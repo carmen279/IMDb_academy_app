@@ -7,7 +7,6 @@
       :value="value.value"
       ref="checkbox"
       @click="sendChange(value)"
-      checked
     />
     <label
       class="checkbox-lbl"

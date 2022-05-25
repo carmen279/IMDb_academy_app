@@ -80,8 +80,6 @@ export default defineComponent({
   },
   async mounted() {
     await createStore.dispatch("initializeFilters");
-    this.checkedGenres = createStore.state.initialGenres;
-    this.checkedTypes = createStore.state.initialTypes;
     this.sendSearch(this.checkedGenres, this.checkedTypes);
   },
 });
