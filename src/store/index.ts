@@ -12,6 +12,7 @@ export default createStore({
     currentPage: 0,
     pageSize: 12,
     nameFilter: "",
+    minRating: 1,
     genresFilter: [] as { name: string; value: string }[],
     typeFilter: [] as { name: string; value: string }[],
     initialGenres: [] as { name: string; value: string }[],
@@ -23,6 +24,7 @@ export default createStore({
         genres: state.genresFilter,
         types: state.typeFilter,
         text: state.nameFilter,
+        minRating: state.minRating,
         currentPage: state.currentPage,
         pageSize: state.pageSize,
       };
@@ -42,10 +44,12 @@ export default createStore({
       state.nameFilter = params.name;
       state.genresFilter = params.genres;
       state.typeFilter = params.types;
+      state.minRating = params.minRating;
     },
     initializeFilters(state, params) {
       state.initialGenres = params.genres;
       state.initialTypes = params.types;
+      state.minRating = 1;
     },
   },
   actions: {

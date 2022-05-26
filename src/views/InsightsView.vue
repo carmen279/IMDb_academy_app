@@ -45,7 +45,7 @@
         <BarChart />
       </div>
       <div class="chart">
-        <h2>Num of elements per genre</h2>
+        <h3>Num of elements per genre</h3>
         <BubbleChart />
       </div>
       <div class="description">
@@ -68,11 +68,11 @@
         </p>
       </div>
       <div class="chart">
-        <h2>Ratings per year</h2>
+        <h3>Ratings per year</h3>
         <LineChart />
       </div>
       <div class="suggestions">
-        <h3>Some of the best rated from the best decade:</h3>
+        <h2>Some of the best rated from the best decade:</h2>
         <div class="suggestion-container">
           <FilmCard
             v-for="suggestion of getSuggestions"
@@ -83,7 +83,7 @@
         </div>
       </div>
       <div class="chart">
-        <h2>Runtime media by decade</h2>
+        <h3>Runtime media by decade</h3>
         <BarRuntimeChart />
       </div>
       <div class="description">
@@ -95,7 +95,7 @@
         </p>
       </div>
       <div class="suggestions">
-        <h3>Do you have some time? The longest films in history:</h3>
+        <h2>Do you have some time? The longest films in history:</h2>
         <div class="suggestion-container">
           <FilmCard
             v-for="suggestion of getLongest"

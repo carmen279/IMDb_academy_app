@@ -80,7 +80,10 @@ function getFilters(state: any) {
   return `${getListFilter(state.genres, "?genre=")}${getListFilter(
     state.types,
     "&type="
-  )}&q=${state.text}${getPageFilter(state.currentPage, state.pageSize)}`;
+  )}&gte=${state.minRating}&q=${state.text}${getPageFilter(
+    state.currentPage,
+    state.pageSize
+  )}`;
 }
 
 /*

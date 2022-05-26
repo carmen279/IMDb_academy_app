@@ -30,7 +30,9 @@
     </ul>
   </div>
   <FilterComponent
-    v-on:filterChange="searchFilms(text, $event.genres, $event.types)"
+    v-on:filterChange="
+      searchFilms(text, $event.genres, $event.types, $event.minRating)
+    "
   />
 </template>
 
@@ -56,13 +58,14 @@ export default defineComponent({
     },
   },
   methods: {
-    searchFilms(name, genres, types) {
+    searchFilms(name, genres, types, minRating) {
       this.checkedGenres = genres;
       this.checkedTypes = types;
       createStore.dispatch("filterFilms", {
         name: name,
         genres: genres,
         types: types,
+        minRating: minRating,
       });
     },
     debounceMethod: debounce((fn, newText, genres, types) => {

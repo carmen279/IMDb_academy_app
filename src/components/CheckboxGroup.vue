@@ -53,7 +53,7 @@ export default defineComponent({
 }
 
 .checkbox-lbl {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: white;
   border: 2px solid rgba(139, 139, 139, 0.3);
   color: #5f8586;
   border-radius: 25px;

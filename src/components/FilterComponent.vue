@@ -3,6 +3,21 @@
     <p class="filter-txt">Filter</p>
     <div class="filter-input">
       <div class="checkbox-container">
+        <p>Minimum rating:</p>
+        <div class="num-block skin-2">
+          <div ref="spinnerContainer" class="num-in">
+            <span class="minus" @click="spinnerMinusClick"></span>
+            <input
+              ref="spinnerInput"
+              type="number"
+              class="in-num"
+              v-model="minRating"
+            />
+            <span class="plus" @click="spinnerPlusClick"></span>
+          </div>
+        </div>
+      </div>
+      <div class="checkbox-container">
         <p>Genres:</p>
         <div class="checkboxes">
           <CheckboxGroup
@@ -28,16 +43,6 @@
           />
         </div>
       </div>
-      <div class="checkbox-container">
-        <p>Minimum rating:</p>
-        <div class="num-block skin-2">
-          <div class="num-in">
-            <span class="minus dis"></span>
-            <input type="text" class="in-num" value="1" readonly="" />
-            <span class="plus"></span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -53,6 +58,7 @@ export default defineComponent({
     return {
       checkedGenres: [],
       checkedTypes: [],
+      minRating: 1,
     };
   },
   computed: {
@@ -63,9 +69,27 @@ export default defineComponent({
       return createStore.state.initialTypes;
     },
   },
+  watch: {
+    minRating() {
+      if (this.minRating > 10) this.minRating = 10;
+      else if (this.minRating < 0) this.minRating = 0;
+      else
+        this.sendSearch(this.checkedGenres, this.checkedTypes, this.minRating);
+    },
+  },
   methods: {
-    sendSearch(genres, types) {
-      this.$emit("filterChange", { genres: genres, types: types });
+    spinnerPlusClick() {
+      if (this.minRating < 10) this.minRating++;
+    },
+    spinnerMinusClick() {
+      if (this.minRating > 0) this.minRating--;
+    },
+    sendSearch(genres, types, minRating) {
+      this.$emit("filterChange", {
+        genres: genres,
+        types: types,
+        minRating: minRating,
+      });
     },
     changeGenres(genreChange) {
       if (genreChange.selected) {
@@ -75,7 +99,7 @@ export default defineComponent({
           (genre) => genre.value != genreChange.value.value
         );
       }
-      this.sendSearch(this.checkedGenres, this.checkedTypes);
+      this.sendSearch(this.checkedGenres, this.checkedTypes, this.minRating);
     },
     changeTypes(typeChange) {
       if (typeChange.selected) {
@@ -85,12 +109,12 @@ export default defineComponent({
           (type) => type.value != typeChange.value.value
         );
       }
-      this.sendSearch(this.checkedGenres, this.checkedTypes);
+      this.sendSearch(this.checkedGenres, this.checkedTypes, this.minRating);
     },
   },
   async mounted() {
     await createStore.dispatch("initializeFilters");
-    this.sendSearch(this.checkedGenres, this.checkedTypes);
+    this.sendSearch(this.checkedGenres, this.checkedTypes, this.minRating);
   },
 });
 </script>
@@ -102,6 +126,11 @@ p {
 
 .checked {
   color: #42b983;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .filter-container {
@@ -157,17 +186,16 @@ p {
   flex-flow: row wrap;
 }
 
-/* skin 2 */
-.skin-2 .num-in {
+.num-in {
   background: #ffffff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
   border-radius: 25px;
-  height: 40px;
+  height: 45px;
   width: 110px;
   float: left;
 }
 
-.skin-2 .num-in span {
+span {
   width: 40%;
   display: block;
   height: 40px;
@@ -175,24 +203,33 @@ p {
   position: relative;
 }
 
-.skin-2 .num-in span:before,
-.skin-2 .num-in span:after {
+span:before,
+span:after {
   content: "";
   position: absolute;
-  background-color: #667780;
+  background-color: #00d376;
   height: 2px;
   width: 10px;
-  top: 50%;
-  left: 50%;
   margin-top: -1px;
   margin-left: -5px;
 }
+span.minus:before,
+span.minus:after {
+  top: 55%;
+  left: 50%;
+}
 
-.skin-2 .num-in span.plus:after {
+span.plus:before,
+span.plus:after {
+  top: -50%;
+  left: 200%;
+}
+
+span.plus:after {
   transform: rotate(90deg);
 }
 
-.skin-2 .num-in input {
+.num-in input {
   float: left;
   width: 20%;
   height: 40px;
