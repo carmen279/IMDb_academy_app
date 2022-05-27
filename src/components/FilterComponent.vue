@@ -142,6 +142,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   margin: 20px;
+  margin-top: 0px;
 }
 .checkbox-container {
   display: flex;

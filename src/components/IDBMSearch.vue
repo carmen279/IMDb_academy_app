@@ -78,7 +78,8 @@ export default defineComponent({
         this.searchFilms,
         newText,
         this.checkedGenres,
-        this.checkedTypes
+        this.checkedTypes,
+        this.minRating
       );
     },
   },
@@ -90,6 +91,7 @@ export default defineComponent({
   background: #fff;
   border-radius: 30px;
   padding-right: 50px;
+  margin-bottom: 50px;
 }
 
 .searchinput-container {

@@ -11,10 +11,13 @@ Request films from the search API meeting the criteria required in the state par
  */
 export async function requestFilms(state: any) {
   const data = { content: [], suggestions: [] as any[] };
-  data.content = await fetch(`${baseSearchUrl}${getFilters(state)}`).then(
-    (response) => response.json()
-  );
+  data.content = (
+    await fetch(`${baseSearchUrl}${getFilters(state)}`).then((response) =>
+      response.json()
+    )
+  ).hits;
   console.log(`${baseSearchUrl}${getFilters(state)}`);
+  console.log(data);
   data.suggestions = [];
   return data;
 }
@@ -27,14 +30,12 @@ export async function requestFilmDetails(filmId: string) {
     await fetch(`${baseSearchByIdUrl}?id=${filmId}`).then((response) =>
       response.json()
     )
-  )[0];
-
+  ).hits[0];
   filmDetail.source.suggestions = await getSuggestions(
     filmDetail.id,
     filmDetail.source.genres
   );
 
-  console.log(filmDetail.source);
   return filmDetail.source;
 }
 
@@ -111,7 +112,7 @@ async function fetchAggregation(field: string) {
       await fetch(`${baseSearchUrl}?agg=${field}&q=`).then((resolve) =>
         resolve.json()
       )
-    )
+    ).aggs
       //Filters non-valid elements
       .filter((elem: any) => elem.key != "\\N" && elem.key != "Adult")
       //Maps to a response object that includes a beautified version as name
@@ -140,6 +141,7 @@ async function getSuggestions(id: string, genres: any[]) {
     types: [],
     pageSize: 6,
     currentPage: 1,
+    minRating: 1,
     text: "",
   };
   const suggestions = await requestFilms(params);

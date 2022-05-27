@@ -64,7 +64,7 @@
           the graph
         </p>
         <p>
-          Seems like the golden decade was... <b><i>The 90s</i></b>
+          Seems like the golden decade is gonna be... <b><i>The 2020s</i></b>
         </p>
       </div>
       <div class="chart">
@@ -91,7 +91,7 @@
         <p>Also calculated!</p>
         <p>
           Seems like the longest films where made during
-          <b><i>the 90s</i></b>
+          <b><i>1967</i></b>
         </p>
       </div>
       <div class="suggestions">
@@ -137,204 +137,115 @@ export default {
     getSuggestions() {
       return [
         {
-          id: "tt0111161",
+          id: "tt2380307",
           source: {
-            tconst: "tt0111161",
-            titleType: "movie",
-            primaryTitle: "The Shawshank Redemption",
-            originalTitle: "The Shawshank Redemption",
-            isAdult: false,
-            startYear: 1994,
-            endYear: 0,
-            runtimeMinutes: 142,
-            genres: ["Drama"],
-            averageRating: 9.3,
-            numVotes: 2569780,
-            directors: [{ nconst: "nm0001104" }],
-            principals: [
-              { name: { nconst: "nm0290358" }, characters: "\\N" },
-              {
-                name: { nconst: "nm0000209" },
-                characters: '["Andy Dufresne"]',
-              },
-              {
-                name: { nconst: "nm0000151" },
-                characters: "[\"Ellis Boyd 'Red' Redding\"]",
-              },
-              {
-                name: { nconst: "nm0348409" },
-                characters: '["Warden Norton"]',
-              },
-              { name: { nconst: "nm0006669" }, characters: '["Heywood"]' },
-              { name: { nconst: "nm0001104" }, characters: "\\N" },
-              { name: { nconst: "nm0000175" }, characters: "\\N" },
-              { name: { nconst: "nm0555550" }, characters: "\\N" },
-              { name: { nconst: "nm0002353" }, characters: "\\N" },
-              { name: { nconst: "nm0005683" }, characters: "\\N" },
-            ],
+            tconst: "tt2380307",
+            primaryTitle: "Coco",
+            startYear: 2017,
+            runtimeMinutes: 105,
+            genres: ["Adventure", "Animation", "Comedy"],
+            averageRating: 8.4,
           },
-          score: 271.61798,
         },
         {
-          id: "tt0468569",
+          id: "tt4154796",
           source: {
-            tconst: "tt0468569",
-            titleType: "movie",
-            primaryTitle: "The Dark Knight",
-            originalTitle: "The Dark Knight",
-            isAdult: false,
-            startYear: 2008,
-            endYear: 0,
-            runtimeMinutes: 152,
-            genres: ["Action", "Crime", "Drama"],
-            averageRating: 9.1,
-            numVotes: 2535286,
-            directors: [{ nconst: "nm0634240" }],
-            principals: [
-              { name: { nconst: "nm0746273" }, characters: "\\N" },
-              { name: { nconst: "nm0000288" }, characters: '["Bruce Wayne"]' },
-              { name: { nconst: "nm0005132" }, characters: '["Joker"]' },
-              { name: { nconst: "nm0001173" }, characters: '["Harvey Dent"]' },
-              { name: { nconst: "nm0000323" }, characters: '["Alfred"]' },
-              { name: { nconst: "nm0634240" }, characters: "\\N" },
-              { name: { nconst: "nm0634300" }, characters: "\\N" },
-              { name: { nconst: "nm0275286" }, characters: "\\N" },
-              { name: { nconst: "nm0004170" }, characters: "\\N" },
-              { name: { nconst: "nm0650038" }, characters: "\\N" },
-            ],
-          },
-          score: 266.01926,
-        },
-        {
-          id: "tt1375666",
-          source: {
-            tconst: "tt1375666",
-            titleType: "movie",
-            primaryTitle: "Inception",
-            originalTitle: "Inception",
-            isAdult: false,
-            startYear: 2010,
-            endYear: 0,
-            runtimeMinutes: 148,
-            genres: ["Action", "Adventure", "Sci-Fi"],
-            averageRating: 8.8,
-            numVotes: 2255432,
-            directors: [{ nconst: "nm0634240" }],
-            principals: [
-              { name: { nconst: "nm0245596" }, characters: "\\N" },
-              { name: { nconst: "nm0000138" }, characters: '["Cobb"]' },
-              { name: { nconst: "nm0330687" }, characters: '["Arthur"]' },
-              { name: { nconst: "nm0680983" }, characters: '["Ariadne"]' },
-              { name: { nconst: "nm0913822" }, characters: '["Saito"]' },
-              { name: { nconst: "nm0634240" }, characters: "\\N" },
-              { name: { nconst: "nm0858799" }, characters: "\\N" },
-              { name: { nconst: "nm0001877" }, characters: "\\N" },
-              { name: { nconst: "nm0002892" }, characters: "\\N" },
-              { name: { nconst: "nm0809059" }, characters: "\\N" },
-            ],
-          },
-          score: 234.0817,
-        },
-        {
-          id: "tt0137523",
-          source: {
-            tconst: "tt0137523",
-            titleType: "movie",
-            primaryTitle: "Fight Club",
-            originalTitle: "Fight Club",
-            isAdult: false,
-            startYear: 1999,
-            endYear: 0,
-            runtimeMinutes: 139,
-            genres: ["Drama"],
-            averageRating: 8.8,
-            numVotes: 2022165,
-            directors: [{ nconst: "nm0000399" }],
-            principals: [
-              { name: { nconst: "nm0513165" }, characters: "\\N" },
-              { name: { nconst: "nm0000093" }, characters: '["Tyler Durden"]' },
-              { name: { nconst: "nm0001570" }, characters: '["Narrator"]' },
-              {
-                name: { nconst: "nm0001533" },
-                characters: '["Robert Paulsen"]',
-              },
-              {
-                name: { nconst: "nm0340260" },
-                characters: '["Richard Chesler (Regional Manager)"]',
-              },
-              { name: { nconst: "nm0000399" }, characters: "\\N" },
-              { name: { nconst: "nm0657333" }, characters: "\\N" },
-              { name: { nconst: "nm0880243" }, characters: "\\N" },
-              { name: { nconst: "nm0068501" }, characters: "\\N" },
-              { name: { nconst: "nm0149556" }, characters: "\\N" },
-            ],
-          },
-          score: 209.97533,
-        },
-        {
-          id: "tt0944947",
-          source: {
-            tconst: "tt0944947",
-            titleType: "tvSeries",
-            primaryTitle: "Game of Thrones",
-            originalTitle: "Game of Thrones",
-            isAdult: false,
-            startYear: 2011,
-            endYear: 2019,
-            runtimeMinutes: 57,
+            tconst: "tt4154796",
+            primaryTitle: "Avengers: Endgame",
+            startYear: 2019,
+            runtimeMinutes: 181,
             genres: ["Action", "Adventure", "Drama"],
-            averageRating: 9.3,
-            numVotes: 1971008,
-            directors: [
-              { nconst: "nm0851930" },
-              { nconst: "nm0551076" },
-              { nconst: "nm0887700" },
-              { nconst: "nm0533713" },
-              { nconst: "nm0755261" },
-              { nconst: "nm0617042" },
-              { nconst: "nm0687964" },
-              { nconst: "nm0007008" },
-              { nconst: "nm0336241" },
-              { nconst: "nm0002399" },
-              { nconst: "nm0070474" },
-              { nconst: "nm0638354" },
-              { nconst: "nm0806252" },
-              { nconst: "nm1047532" },
-              { nconst: "nm1888967" },
-              { nconst: "nm0764601" },
-              { nconst: "nm1125275" },
-              { nconst: "nm0590889" },
-              { nconst: "nm0787687" },
-            ],
-            principals: [
-              {
-                name: { nconst: "nm0322513" },
-                characters: '["Jorah Mormont"]',
-              },
-              {
-                name: { nconst: "nm3592338" },
-                characters: '["Daenerys Targaryen"]',
-              },
-              {
-                name: { nconst: "nm0227759" },
-                characters: '["Tyrion Lannister"]',
-              },
-              { name: { nconst: "nm3229685" }, characters: '["Jon Snow"]' },
-              {
-                name: { nconst: "nm0372176" },
-                characters: '["Cersei Lannister"]',
-              },
-              { name: { nconst: "nm1125275" }, characters: "\\N" },
-              { name: { nconst: "nm1888967" }, characters: "\\N" },
-              { name: { nconst: "nm3849842" }, characters: '["Sansa Stark"]' },
-              { name: { nconst: "nm3586035" }, characters: '["Arya Stark"]' },
-              {
-                name: { nconst: "nm0182666" },
-                characters: '["Jaime Lannister"]',
-              },
-            ],
+            averageRating: 8.4,
           },
-          score: 208.56259,
+        },
+
+        {
+          id: "tt4154756",
+          source: {
+            tconst: "tt4154756",
+            primaryTitle: "Avengers: Infinity War",
+            startYear: 2018,
+            runtimeMinutes: 149,
+            genres: ["Action", "Adventure", "Sci-Fi"],
+            averageRating: 8.4,
+          },
+        },
+        {
+          id: "tt7286456",
+          source: {
+            tconst: "tt7286456",
+            primaryTitle: "Joker",
+            startYear: 2019,
+            runtimeMinutes: 122,
+            genres: ["Crime", "Drama", "Thriller"],
+            averageRating: 8.4,
+          },
+        },
+        {
+          id: "tt1345836",
+          source: {
+            tconst: "tt1345836",
+            primaryTitle: "The Dark Knight Rises",
+            startYear: 2012,
+            runtimeMinutes: 164,
+            genres: ["Action", "Crime", "Drama"],
+            averageRating: 8.4,
+          },
+        },
+        {
+          id: "tt1853728",
+          source: {
+            tconst: "tt1853728",
+            primaryTitle: "Django Unchained",
+            startYear: 2012,
+            runtimeMinutes: 165,
+            genres: ["Drama", "Western"],
+            averageRating: 8.4,
+          },
+        },
+        {
+          id: "tt6751668",
+          source: {
+            tconst: "tt6751668",
+            primaryTitle: "Parasite",
+            startYear: 2019,
+            runtimeMinutes: 132,
+            genres: ["Comedy", "Drama", "Thriller"],
+            averageRating: 8.5,
+          },
+        },
+        {
+          id: "tt1675434",
+          source: {
+            tconst: "tt1675434",
+            primaryTitle: "The Intouchables",
+            startYear: 2011,
+            runtimeMinutes: 112,
+            genres: ["Biography", "Comedy", "Drama"],
+            averageRating: 8.5,
+          },
+        },
+        {
+          id: "tt2582802",
+          source: {
+            tconst: "tt2582802",
+            primaryTitle: "Whiplash",
+            startYear: 2014,
+            runtimeMinutes: 106,
+            genres: ["Drama", "Music"],
+            averageRating: 8.5,
+          },
+        },
+        {
+          id: "tt0816692",
+          source: {
+            tconst: "tt2582802",
+            primaryTitle: "Interstellar",
+            startYear: 2014,
+            runtimeMinutes: 169,
+            genres: ["Adventure", "Drama", "Sci-Fi"],
+            averageRating: 8.6,
+          },
         },
       ];
     },
