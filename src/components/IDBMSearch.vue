@@ -31,7 +31,7 @@
   </div>
   <FilterComponent
     v-on:filterChange="
-      searchFilms(text, $event.genres, $event.types, $event.minRating)
+      updateAndSearchFilms(text, $event.genres, $event.types, $event.minRating)
     "
   />
 </template>
@@ -50,6 +50,7 @@ export default defineComponent({
       checkedGenres: [],
       checkedTypes: [],
       inputFocus: false,
+      minRating: 0,
     };
   },
   computed: {
@@ -58,29 +59,28 @@ export default defineComponent({
     },
   },
   methods: {
-    searchFilms(name, genres, types, minRating) {
+    updateAndSearchFilms(name, genres, types, minRating) {
+      this.text = name;
       this.checkedGenres = genres;
       this.checkedTypes = types;
+      this.minRating = minRating;
+      this.searchFilms();
+    },
+    searchFilms() {
       createStore.dispatch("filterFilms", {
-        name: name,
-        genres: genres,
-        types: types,
-        minRating: minRating,
+        name: this.text,
+        genres: this.checkedGenres,
+        types: this.checkedTypes,
+        minRating: this.minRating,
       });
     },
-    debounceMethod: debounce((fn, newText, genres, types) => {
-      fn(newText, genres, types);
+    debounceMethod: debounce((fn, newText) => {
+      fn(newText);
     }, 1000),
   },
   watch: {
-    text(newText) {
-      this.debounceMethod(
-        this.searchFilms,
-        newText,
-        this.checkedGenres,
-        this.checkedTypes,
-        this.minRating
-      );
+    text() {
+      this.debounceMethod(this.searchFilms);
     },
   },
 });

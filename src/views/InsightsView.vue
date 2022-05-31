@@ -378,6 +378,8 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 40%;
+  min-width: 800px;
 }
 p {
   font-size: 28px;
@@ -391,7 +393,8 @@ p {
   padding: 10px 80px;
 }
 .chart {
-  width: 850px;
+  width: 50%;
+  min-width: 800px;
   margin: 20px;
 }
 .charts-container {
